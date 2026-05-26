@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Tecnológico de Solos</title>
+    <!-- Tailwind CSS para Estilização Premium -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js para Gráficos Interativos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF para Geração Segura e Local de Relatórios em PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            600: '#1d4ed8',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        geotech: '#154c81'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-slice {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- TOPBAR -->
+    <header class="bg-geotech text-white shadow-md px-6 py-4 flex flex-wrap justify-between items-center border-b border-blue-900">
+        <div class="flex items-center space-x-3">
+            <div class="bg-white/10 p-2.5 rounded-lg">
+                <i class="fa-solid fa-vial-circle-check text-2xl text-blue-300"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-wide">Laboratorio-Metrosul</h1>
+                <p class="text-xs text-blue-200">Controle Tecnológico de Campo & Compactação v2.0</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4 mt-2 sm:mt-0">
+            <span class="bg-blue-800/60 px-3 py-1.5 rounded-full text-xs font-semibold text-blue-100 flex items-center gap-2 border border-blue-700/50">
+                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> Servidor Local Ativo
+            </span>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="flex flex-1 flex-col md:flex-row">
+        
+        <!-- SIDEBAR DE NAVEGAÇÃO -->
+        <nav class="w-full md:w-64 bg-white border-r border-slate-200 p-4 flex flex-col justify-between">
+            <div class="space-y-1">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 block mb-3">Módulos de Trabalho</span>
+                
+                <button onclick="switchTab('home')" id="btn-home" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-house text-lg w-6 text-center"></i>
+                    <span>Início / Painel Geral</span>
+                </button>
+                
+                <button onclick="switchTab('metrosul')" id="btn-metrosul" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                    <i class="fa-solid fa-weight-hanging text-lg w-6 text-center"></i>
+                    <span>Densidade In Situ</span>
+                </button>
+                
+                <button onclick="switchTab('corsan')" id="btn-corsan" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                    <i class="fa-solid fa-arrow-down-up-lock text-lg w-6 text-center"></i>
+                    <span>Ensaio DCP</span>
+                </button>
+            </div>
+            
+            <div class="pt-4 border-t border-slate-100 mt-6 md:mt-0">
+                <div class="bg-slate-50 rounded-lg p-3 text-xs border border-slate-200">
+                    <p class="font-semibold text-slate-700 mb-1">Engenharia de Solos</p>
+                    <p class="text-slate-500 leading-relaxed">Conformidade com especificações técnicas Metrosul, Corsan e normas DNIT vigentes.</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- AREA DE CONTEÚDO PRINCIPAL -->
+        <main class="flex-1 p-6 lg:p-8 overflow-y-auto">
+
+            <!-- ================= HOME TAB ================= -->
+            <div id="tab-home" class="space-y-6 max-w-2xl mx-auto py-12">
+                <h2 class="text-2xl font-bold text-slate-800 text-center mb-8">Selecione o Módulo de Ensaio</h2>
+                
+                <div class="grid grid-cols-1 gap-6">
+                    <!-- Botão 1 -->
+                    <button onclick="switchTab('metrosul')" class="flex items-center justify-between bg-geotech hover:bg-blue-900 text-white p-6 rounded-xl shadow-md transition-all group">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-white/10 p-3 rounded-lg text-xl">
+                                <i class="fa-solid fa-weight-hanging"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-bold text-base">Densidade In Situ</h3>
+                                <p class="text-xs text-blue-200 mt-0.5">Frasco de Areia (Metrosul)</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-lg transition-transform group-hover:translate-x-1"></i>
+                    </button>
+
+                    <!-- Botão 2 -->
+                    <button onclick="switchTab('corsan')" class="flex items-center justify-between bg-slate-800 hover:bg-slate-900 text-white p-6 rounded-xl shadow-md transition-all group">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-white/10 p-3 rounded-lg text-xl">
+                                <i class="fa-solid fa-arrow-down-up-lock"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-bold text-base">Ensaio DCP</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Cone Penetrométrico (Corsan)</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-lg transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ================= METROSUL TAB ================= -->
+            <div id="tab-metrosul" class="hidden space-y-6">
+                <!-- Cabeçalho do Módulo -->
+                <div class="flex flex-wrap justify-between items-center gap-4 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Densidade In Situ - Método do Frasco de Areia</h2>
+                        <p class="text-xs text-slate-500 mt-1">Conformidade e diretrizes do controle de compactação Metrosul</p>
+                    </div>
+                    <button onclick="switchTab('home')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2 px-3 rounded-lg flex items-center gap-2 transition-all">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+                    </button>
+                </div>
+
+                <!-- Painel de Duas Colunas -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Esquerda: Inputs -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <!-- Identificação -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                            <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-clipboard-list text-geotech"></i> Identificação e Cadastro
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Ordem de Serviço (OS)</label>
+                                    <input type="text" id="m-os" placeholder="Digite a OS..." oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-brand-100 focus:border-geotech outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Material do Solo</label>
+                                    <input type="text" id="m-material" placeholder="Ex: Solo Argilo-Arenoso" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-brand-100 focus:border-geotech outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Umidade -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                            <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-droplet text-blue-500"></i> 1. Determinação da Umidade ($w$)
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Tara da Bandeja (g)</label>
+                                    <input type="text" id="m-ua" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Solo Úmido + Tara (g)</label>
+                                    <input type="text" id="m-ub" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Solo Seco + Tara (g)</label>
+                                    <input type="text" id="m-uc" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Densidade -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                            <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-hill-rockslide text-amber-600"></i> 2. Medidas da Cava e Areia
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Inicial Frasco+Areia (g)</label>
+                                    <input type="text" id="m-da" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Final Frasco+Areia (g)</label>
+                                    <input type="text" id="m-db" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Areia no Cone (g)</label>
+                                    <input type="text" id="m-dd" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Densidade da Areia (g/cm³)</label>
+                                    <input type="text" id="m-df" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                            </div>
+
+                            <!-- Ordem dos campos alterada conforme solicitado pelo usuário (Tara primeiro, depois Solo Úmido) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-100">
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Tara da Bandeja Cava (g)</label>
+                                    <input type="text" id="m-dhtara" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Úmida + Bandeja Cava (g)</label>
+                                    <input type="text" id="m-dhtotal" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Proctor Máximo Laboratório (g/cm³)</label>
+                                    <input type="text" id="m-proctor" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direita: Resultados Consolidados -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm sticky top-4 space-y-6">
+                            <h3 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center justify-between">
+                                <span>Painel de Resultados</span>
+                                <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Tempo Real</span>
+                            </h3>
+
+                            <!-- Grande Status Box -->
+                            <div id="m-status-card" class="rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2">
+                                <span class="text-xs uppercase tracking-wider font-semibold" id="m-status-lbl">CÁLCULO ATIVO</span>
+                                <div class="text-4xl font-extrabold" id="m-gc-val">0.00%</div>
+                                <span class="text-xs text-white/80" id="m-status-desc">Preencha os dados à esquerda</span>
+                            </div>
+
+                            <!-- Métricas Rápidas -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                    <div class="text-[10px] font-semibold text-slate-400 uppercase">Teor de Umidade</div>
+                                    <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-umidade">0.00%</div>
+                                </div>
+                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                    <div class="text-[10px] font-semibold text-slate-400 uppercase">Vol. do Buraco</div>
+                                    <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-volume">0.00 cm³</div>
+                                </div>
+                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                    <div class="text-[10px] font-semibold text-slate-400 uppercase">Densidade Seca</div>
+                                    <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-densidade-seca">0.000 g/cm³</div>
+                                </div>
+                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                    <div class="text-[10px] font-semibold text-slate-400 uppercase">Massa Solo Úmido</div>
+                                    <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-massa-solo">0.00 g</div>
+                                </div>
+                            </div>
+
+                            <!-- Botão de Exportação -->
+                            <button onclick="exportMetrosulPDF()" class="w-full bg-geotech hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-3 shadow-lg hover:shadow-geotech/20 transition-all">
+                                <i class="fa-solid fa-file-pdf text-lg"></i> Gerar Relatório Oficial (PDF)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= CORSAN TAB ================= -->
+            <div id="tab-corsan" class="hidden space-y-6">
+                <!-- Cabeçalho do Módulo -->
+                <div class="flex flex-wrap justify-between items-center gap-4 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Ensaio DCP (Cone Penetrométrico Dinâmico)</h2>
+                        <p class="text-xs text-slate-500 mt-1">Geração dinâmica de perfil e limites regulatórios da Corsan</p>
+                    </div>
+                    <button onclick="switchTab('home')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2 px-3 rounded-lg flex items-center gap-2 transition-all">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+                    </button>
+                </div>
+
+                <!-- Painel de Duas Colunas -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Esquerda: Inputs Dinâmicos de Golpes -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <!-- Metadados da Obra -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                            <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-road text-geotech"></i> Localização & Referência
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Ordem de Serviço (OS)</label>
+                                    <input type="text" id="c-os" placeholder="Digite a OS..." oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Material de Camada</label>
+                                    <select id="c-material" onchange="alterarMaterial()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none bg-white">
+                                        <option value="BGS">BGS (Base Granular)</option>
+                                        <option value="Solo" selected>Solo Subleito</option>
+                                        <option value="Areia">Areia / Sub-base</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Localização/Trecho</label>
+                                    <input type="text" id="c-local" placeholder="Ex: Trecho A" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Leitura do Marco Zero (mm)</label>
+                                    <input type="number" id="c-marcozero" value="0.0" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-medium text-slate-500 mb-1">Limite Máximo IPD (mm/golpe)</label>
+                                    <input type="number" id="c-limite" value="17.0" step="0.1" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none font-semibold text-slate-700 bg-slate-50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid de Leituras Dinâmicas -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                                <h3 class="text-sm font-semibold text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-list-ol text-geotech"></i> Leituras Sequenciais
+                                </h3>
+                                <span class="bg-blue-100 text-geotech text-[10px] font-bold px-2 py-0.5 rounded-full">Passos de 3 Golpes</span>
+                            </div>
+
+                            <div id="dcp-readings-container" class="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                                <!-- Linhas serão adicionadas de forma dinâmica por JS -->
+                            </div>
+
+                            <!-- Ações Rápidas de Linhas -->
+                            <div class="grid grid-cols-2 gap-3 pt-2">
+                                <button onclick="addRowDCP()" class="border border-geotech text-geotech hover:bg-brand-50 font-bold py-2 px-3 rounded-lg text-xs flex items-center justify-center gap-2 transition-all">
+                                    <i class="fa-solid fa-plus"></i> Inserir Linha (+3 Golpes)
+                                </button>
+                                <button onclick="removeRowDCP()" class="border border-red-200 text-red-500 hover:bg-red-50 font-bold py-2 px-3 rounded-lg text-xs flex items-center justify-center gap-2 transition-all">
+                                    <i class="fa-solid fa-trash-can"></i> Remover Linha
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direita: Gráficos e Resultados -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <!-- Card Status -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-6">
+                            <div id="c-status-card" class="rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 text-white">
+                                <span class="text-xs uppercase tracking-wider font-semibold" id="c-status-lbl">STATUS DO DCP</span>
+                                <div class="text-4xl font-extrabold" id="c-ipd-val">0.000 mm/g</div>
+                                <span class="text-xs text-white/80" id="c-status-desc">Preencha os dados</span>
+                            </div>
+
+                            <!-- Canvas de Gráfico -->
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col items-center">
+                                <div class="w-full text-center text-xs font-semibold text-slate-500 mb-2">Curva de Penetração Acumulada vs Golpes</div>
+                                <div class="w-full relative h-[250px]">
+                                    <canvas id="dcpChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Botão de Exportação -->
+                            <button onclick="exportCorsanPDF()" class="w-full bg-geotech hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-3 shadow-lg hover:shadow-geotech/20 transition-all">
+                                <i class="fa-solid fa-file-pdf text-lg"></i> Gerar Relatório DCP (PDF)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT: LÓGICA DE CÁLCULO, TABS, GRÁFICO E PDF -->
+    <script>
+        // ESTADO GLOBAL DO DCP (Iniciado de forma limpa/zerada)
+        let leiturasDCP = [0.0]; 
+        let dcpChart = null;
+        let limitesDCP = {
+            "BGS": 6.0,
+            "Solo": 17.0,
+            "Areia": 22.0
+        };
+
+        // ROTEADOR DE ABAS
+        function switchTab(tabId) {
+            // Ocultar todas as abas
+            document.getElementById('tab-home').classList.add('hidden');
+            document.getElementById('tab-metrosul').classList.add('hidden');
+            document.getElementById('tab-corsan').classList.add('hidden');
+            
+            // Remover destaque dos botões da sidebar
+            const buttons = ['btn-home', 'btn-metrosul', 'btn-corsan'];
+            buttons.forEach(id => {
+                const btn = document.getElementById(id);
+                btn.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900";
+            });
+
+            // Mostrar a aba selecionada e destacar botão
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-brand-50 text-brand-700";
+
+            // Se for a aba do DCP, renderizar/atualizar o gráfico
+            if (tabId === 'corsan') {
+                initDcpReadings();
+                calcCorsan();
+            }
+        }
+
+        // ================= CONVERSORES SEGUROS =================
+        function safeFloat(val, def = 0.0) {
+            if (val === null || val === undefined) return def;
+            let str = String(val).replace(',', '.').trim();
+            let parsed = parseFloat(str);
+            return isNaN(parsed) ? def : parsed;
+        }
+
+        // ================= LÓGICA: FRASCO DE AREIA (METROSUL) =================
+        function calcMetrosul() {
+            // Determinação da umidade (Passo 1)
+            let ua = safeFloat(document.getElementById('m-ua').value);
+            let ub = safeFloat(document.getElementById('m-ub').value);
+            let uc = safeFloat(document.getElementById('m-uc').value);
+
+            let ud = ub - ua; // Massa solo úmido
+            let ue = uc - ua; // Massa solo seco
+            let uf = ud - ue; // Massa água
+            let ug = ue > 0 ? (uf / ue) * 100.0 : 0.0; // Umidade w %
+
+            // Densidade de campo (Passo 2)
+            let da = safeFloat(document.getElementById('m-da').value);
+            let db = safeFloat(document.getElementById('m-db').value);
+            let dd = safeFloat(document.getElementById('m-dd').value);
+            let df = safeFloat(document.getElementById('m-df').value);
+            let dhtotal = safeFloat(document.getElementById('m-dhtotal').value);
+            let dhtara = safeFloat(document.getElementById('m-dhtara').value);
+            let proctor = safeFloat(document.getElementById('m-proctor').value);
+
+            let dhliquido = dhtotal - dhtara; // Massa líquida solo úmido
+            let dc = da - db; // Massa areia consumida total
+            let de = dc - dd; // Massa areia no buraco
+            let dg = df > 0 ? de / df : 0.0; // Volume do buraco
+            let di = dg > 0 ? dhliquido / dg : 0.0; // Densidade úmida de campo
+            let dj = di / (1.0 + (ug / 100.0)); // Densidade seca de campo
+
+            let gc = proctor > 0 ? (dj / proctor) * 100.0 : 0.0; // Grau de Compactação %
+
+            // Atualização de elementos da Interface em Tempo Real
+            document.getElementById('lbl-umidade').innerText = `${ug.toFixed(2)}%`;
+            document.getElementById('lbl-volume').innerText = `${dg.toFixed(1)} cm³`;
+            document.getElementById('lbl-densidade-seca').innerText = `${dj.toFixed(3)} g/cm³`;
+            document.getElementById('lbl-massa-solo').innerText = `${dhliquido.toFixed(1)} g`;
+
+            const gcVal = document.getElementById('m-gc-val');
+            const statusCard = document.getElementById('m-status-card');
+            const statusLbl = document.getElementById('m-status-lbl');
+            const statusDesc = document.getElementById('m-status-desc');
+
+            gcVal.innerText = `${gc.toFixed(2)}%`;
+
+            if (gc >= 95.0) {
+                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20";
+                statusLbl.innerText = "SISTEMA APROVADO";
+                statusDesc.innerText = "Grau de Compactação adequado (>= 95%)";
+            } else if (gc > 0) {
+                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-rose-600 text-white shadow-lg shadow-rose-600/20";
+                statusLbl.innerText = "RECOMPACTAR CAMADA";
+                statusDesc.innerText = "Grau de Compactação abaixo de 95%";
+            } else {
+                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-slate-300 text-slate-600 shadow-sm";
+                statusLbl.innerText = "AGUARDANDO LEITURAS";
+                statusDesc.innerText = "Insira os dados à esquerda";
+            }
+        }
+
+        // ================= LÓGICA: DCP (CORSAN) =================
+        function alterarMaterial() {
+            let mat = document.getElementById('c-material').value;
+            let limite = limitesDCP[mat];
+            document.getElementById('c-limite').value = limite;
+            calcCorsan();
+        }
+
+        function initDcpReadings() {
+            const container = document.getElementById('dcp-readings-container');
+            container.innerHTML = "";
+            
+            leiturasDCP.forEach((leitura, index) => {
+                let golpes = (index + 1) * 3;
+                let div = document.createElement('div');
+                div.className = "grid grid-cols-12 gap-3 items-center bg-slate-50 border border-slate-200 p-2.5 rounded-lg transition-all hover:bg-slate-100/70";
+                div.innerHTML = `
+                    <div class="col-span-4 text-xs font-bold text-slate-500">${golpes} Golpes</div>
+                    <div class="col-span-8 relative">
+                        <input type="number" step="0.1" value="${leitura}" placeholder="0.0" oninput="updateDcpValue(${index}, this.value)" class="w-full text-xs font-semibold border border-slate-300 rounded-md p-1.5 pr-8 outline-none focus:border-geotech text-slate-800">
+                        <span class="absolute right-2.5 top-1.5 text-[10px] font-medium text-slate-400">mm</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addRowDCP() {
+            let lastVal = leiturasDCP.length > 0 ? leiturasDCP[leiturasDCP.length - 1] : 0;
+            leiturasDCP.push(lastVal);
+            initDcpReadings();
+            calcCorsan();
+        }
+
+        function removeRowDCP() {
+            if (leiturasDCP.length > 1) {
+                leiturasDCP.pop();
+                initDcpReadings();
+                calcCorsan();
+            }
+        }
+
+        function updateDcpValue(index, val) {
+            leiturasDCP[index] = safeFloat(val);
+            calcCorsan();
+        }
+
+        function calcCorsan() {
+            let mz = safeFloat(document.getElementById('c-marcozero').value);
+            let limite = safeFloat(document.getElementById('c-limite').value);
+            
+            let totalGolpes = leiturasDCP.length * 3;
+            let ultimaLeitura = leiturasDCP.length > 0 ? leiturasDCP[leiturasDCP.length - 1] : mz;
+            
+            let ipdFinal = totalGolpes > 0 ? (ultimaLeitura - mz) / totalGolpes : 0.0;
+            
+            // Calculo dos parciais
+            let parciais = [];
+            leiturasDCP.forEach((leitura, idx) => {
+                let golpesAc = (idx + 1) * 3;
+                let ipdp = (leitura - mz) / golpesAc;
+                parciais.push(ipdp);
+            });
+
+            // Status Card
+            const statusCard = document.getElementById('c-status-card');
+            const statusLbl = document.getElementById('c-status-lbl');
+            const statusDesc = document.getElementById('c-status-desc');
+            const ipdVal = document.getElementById('c-ipd-val');
+
+            ipdVal.innerText = `${ipdFinal.toFixed(3)} mm/g`;
+
+            if (ipdFinal <= limite && ipdFinal > 0) {
+                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20";
+                statusLbl.innerText = "RESISTÊNCIA APROVADA";
+                statusDesc.innerText = `Abaixo do limite de ${limite.toFixed(1)} mm/golpe`;
+            } else if (ipdFinal > 0) {
+                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-rose-600 text-white shadow-lg shadow-rose-600/20";
+                statusLbl.innerText = "RECOMPACTAR TRECHO";
+                statusDesc.innerText = `Penetração excessiva (> ${limite.toFixed(1)} mm/golpe)`;
+            } else {
+                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-slate-300 text-slate-600 shadow-sm";
+                statusLbl.innerText = "AGUARDANDO LEITURAS";
+                statusDesc.innerText = "Insira as penetrações obtidas";
+            }
+
+            // Desenhar ou Atualizar Gráfico Chart.js
+            updateChart(mz);
+        }
+
+        function updateChart(mz) {
+            let labels = ['0 G.'];
+            let dados = [mz];
+            
+            leiturasDCP.forEach((lei, idx) => {
+                labels.push(`${(idx + 1) * 3} G.`);
+                dados.push(lei);
+            });
+
+            const ctx = document.getElementById('dcpChart').getContext('2d');
+
+            if (dcpChart) {
+                dcpChart.destroy();
+            }
+
+            dcpChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Penetração Acumulada (mm)',
+                        data: dados,
+                        borderColor: '#154c81',
+                        backgroundColor: 'rgba(21, 76, 129, 0.08)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#154c81',
+                        pointHoverRadius: 6,
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            reverse: true, // Representa a penetração vertical no solo de cima para baixo
+                            grid: { color: '#e2e8f0' },
+                            ticks: { font: { size: 10 } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ================= GERADORES DE PDF (jsPDF) =================
+        function exportMetrosulPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            
+            // Variáveis de cálculo
+            let os = document.getElementById('m-os').value || '---';
+            let material = document.getElementById('m-material').value || '---';
+            let ua = safeFloat(document.getElementById('m-ua').value);
+            let ub = safeFloat(document.getElementById('m-ub').value);
+            let uc = safeFloat(document.getElementById('m-uc').value);
+            let ud = ub - ua;
+            let ue = uc - ua;
+            let uf = ud - ue;
+            let ug = ue > 0 ? (uf / ue) * 100.0 : 0.0;
+
+            let da = safeFloat(document.getElementById('m-da').value);
+            let db = safeFloat(document.getElementById('m-db').value);
+            let dd = safeFloat(document.getElementById('m-dd').value);
+            let df = safeFloat(document.getElementById('m-df').value);
+            let dhtotal = safeFloat(document.getElementById('m-dhtotal').value);
+            let dhtara = safeFloat(document.getElementById('m-dhtara').value);
+            let proctor = safeFloat(document.getElementById('m-proctor').value);
+            let dhliquido = dhtotal - dhtara;
+            let dc = da - db;
+            let de = dc - dd;
+            let dg = df > 0 ? de / df : 0.0;
+            let di = dg > 0 ? dhliquido / dg : 0.0;
+            let dj = di / (1.0 + (ug / 100.0));
+            let gc = proctor > 0 ? (dj / proctor) * 100.0 : 0.0;
+
+            // Cabeçalho Decorado (Título do Ensaio Puro)
+            pdf.setFillColor(21, 76, 129); // Azul Geotech
+            pdf.rect(0, 0, 210, 30, 'F');
+            
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFontSize(14);
+            pdf.text('DENSIDADE "IN SITU" - FRASCO DE AREIA', 105, 12, { align: 'center' });
+            pdf.setFontSize(9);
+            pdf.setFont('Helvetica', 'italic');
+            pdf.text('Relatório Técnico de Controle de Compactação de Campo', 105, 18, { align: 'center' });
+            
+            // Dados da OS
+            pdf.setTextColor(30, 41, 59);
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFontSize(10);
+            pdf.text('DADOS GERAIS DO ENSAIO', 15, 42);
+            pdf.setDrawColor(226, 232, 240);
+            pdf.line(15, 44, 195, 44);
+
+            pdf.setFont('Helvetica', 'normal');
+            pdf.text(`Identificação / OS: ${os}`, 15, 50);
+            pdf.text(`Material Geotécnico: ${material}`, 15, 56);
+            pdf.text(`Data de Emissão: ${new Date().toLocaleDateString('pt-BR')}`, 130, 50);
+
+            // Tabela 1: Umidade
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFillColor(241, 245, 249);
+            pdf.rect(15, 65, 180, 7, 'F');
+            pdf.text('1. DETERMINAÇÃO DO TEOR DE UMIDADE (w %)', 18, 70);
+            
+            let y = 79;
+            pdf.setFont('Helvetica', 'normal');
+            let rowsU = [
+                ["Tara da Bandeja Pequena (ua)", `${ua.toFixed(3)} g`],
+                ["Massa do Solo Úmido + Bandeja (ub)", `${ub.toFixed(3)} g`],
+                ["Massa do Solo Seco + Bandeja (uc)", `${uc.toFixed(3)} g`],
+                ["Massa do Solo Úmido Líquida (ud = ub - ua)", `${ud.toFixed(3)} g`],
+                ["Massa do Solo Seco Líquida (ue = uc - ua)", `${ue.toFixed(3)} g`],
+                ["Massa da Água (uf = ud - ue)", `${uf.toFixed(3)} g`],
+                ["Teor de Umidade Obtido (w %)", `${ug.toFixed(2)} %`]
+            ];
+            
+            rowsU.forEach(row => {
+                pdf.text(row[0], 20, y);
+                pdf.text(row[1], 190, y, { align: 'right' });
+                pdf.line(15, y+2, 195, y+2);
+                y += 8;
+            });
+
+            // Tabela 2: Densidade de Campo
+            y += 4;
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFillColor(241, 245, 249);
+            pdf.rect(15, y, 180, 7, 'F');
+            pdf.text('2. MEDIÇÃO DA CAVA E GRAU DE COMPACTAÇÃO (GC)', 18, y + 5);
+            
+            y += 14;
+            pdf.setFont('Helvetica', 'normal');
+            let rowsD = [
+                ["Massa Inicial Frasco + Areia (da)", `${da.toFixed(3)} g`],
+                ["Massa Final Frasco + Areia (db)", `${db.toFixed(3)} g`],
+                ["Massa da Areia Consumida Total (dc)", `${dc.toFixed(3)} g`],
+                ["Massa da Areia no Cone (dd)", `${dd.toFixed(3)} g`],
+                ["Massa da Areia no Buraco (de = dc - dd)", `${de.toFixed(3)} g`],
+                ["Massa Úmida + Bandeja Cava (dh_total)", `${dhtotal.toFixed(3)} g`],
+                ["Tara da Bandeja Cava (dh_tara)", `${dhtara.toFixed(3)} g`],
+                ["Massa Líquida de Solo Úmido da Cava (dh_liquido)", `${dhliquido.toFixed(3)} g`],
+                ["Volume do Buraco/Cava (dg = de / df)", `${dg.toFixed(1)} cm³`],
+                ["Densidade Úmida de Campo (di)", `${di.toFixed(3)} g/cm³`],
+                ["Massa Específica Seca de Campo (dj)", `${dj.toFixed(3)} g/cm³`],
+                ["Massa Específica Seca Máxima Lab (Proctor)", `${proctor.toFixed(3)} g/cm³`]
+            ];
+
+            rowsD.forEach(row => {
+                pdf.text(row[0], 20, y);
+                pdf.text(row[1], 190, y, { align: 'right' });
+                pdf.line(15, y+2, 195, y+2);
+                y += 8;
+            });
+
+            // Caixa Final de Aprovação
+            y += 6;
+            let statusText = gc >= 95.0 ? "APROVADO" : "REPROVADO / RECOMPACTAR";
+            if (gc >= 95.0) {
+                pdf.setFillColor(209, 250, 229); // Verde suave
+                pdf.setDrawColor(16, 185, 129);
+            } else {
+                pdf.setFillColor(254, 226, 226); // Vermelho suave
+                pdf.setDrawColor(239, 68, 68);
+            }
+            pdf.rect(15, y, 180, 18, 'FD');
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFontSize(12);
+            pdf.setTextColor(gc >= 95.0 ? 6 : 153, gc >= 95.0 ? 95 : 27, gc >= 95.0 ? 70 : 27);
+            pdf.text(`Grau de Compactação Final: ${gc.toFixed(2)}%`, 105, y + 8, { align: 'center' });
+            pdf.setFontSize(10);
+            pdf.text(`Resultado: ${statusText}`, 105, y + 13, { align: 'center' });
+
+            pdf.save(`Relatorio_Metrosul_${os}.pdf`);
+        }
+
+        function exportCorsanPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            let os = document.getElementById('c-os').value || '---';
+            let material = document.getElementById('c-material').value;
+            let local = document.getElementById('c-local').value || '---';
+            let mz = safeFloat(document.getElementById('c-marcozero').value);
+            let limite = safeFloat(document.getElementById('c-limite').value);
+            
+            let totalGolpes = leiturasDCP.length * 3;
+            let ultimaLeitura = leiturasDCP.length > 0 ? leiturasDCP[leiturasDCP.length - 1] : mz;
+            let ipdFinal = totalGolpes > 0 ? (ultimaLeitura - mz) / totalGolpes : 0.0;
+            let status = ipdFinal <= limite ? "APROVADO" : "REPROVADO";
+
+            // Cabeçalho Decorado (Título do Ensaio Puro)
+            pdf.setFillColor(21, 76, 129);
+            pdf.rect(0, 0, 210, 30, 'F');
+            
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFontSize(14);
+            pdf.text('RELATÓRIO TÉCNICO DE ENSAIO DCP', 105, 12, { align: 'center' });
+            pdf.setFontSize(9);
+            pdf.setFont('Helvetica', 'italic');
+            pdf.text('Ensaio de Penetração por Cone Dinâmico - Perfil de Resistência', 105, 18, { align: 'center' });
+
+            // Metadados
+            pdf.setTextColor(30, 41, 59);
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFontSize(10);
+            pdf.text('IDENTIFICAÇÃO DO TRECHO', 15, 42);
+            pdf.setDrawColor(226, 232, 240);
+            pdf.line(15, 44, 195, 44);
+
+            pdf.setFont('Helvetica', 'normal');
+            pdf.text(`Ordem de Serviço (OS): ${os}`, 15, 51);
+            pdf.text(`Material de Referência: ${material}`, 15, 57);
+            pdf.text(`Localização: ${local}`, 15, 63);
+            pdf.text(`Referência (Marco Zero): ${mz.toFixed(1)} mm`, 130, 51);
+            pdf.text(`Limite Permitido: ${limite.toFixed(1)} mm/golpe`, 130, 57);
+
+            // Tabela de Leituras
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFillColor(241, 245, 249);
+            pdf.rect(15, 73, 180, 7, 'F');
+            pdf.text('REGISTRO DE GOLPES E PENETRAÇÃO', 18, 78);
+
+            pdf.setFontSize(9);
+            pdf.text('Golpes Acumulados', 25, 87);
+            pdf.text('Leitura Escala (mm)', 95, 87, { align: 'center' });
+            pdf.text('IPD Acumulado (mm/g)', 175, 87, { align: 'center' });
+            pdf.line(15, 89, 195, 89);
+
+            let y = 94;
+            pdf.setFont('Helvetica', 'normal');
+            leiturasDCP.forEach((leitura, idx) => {
+                let golpes = (idx + 1) * 3;
+                let ipdp = (leitura - mz) / golpes;
+                pdf.text(`${golpes} Golpes`, 25, y);
+                pdf.text(`${leitura.toFixed(1)} mm`, 95, y, { align: 'center' });
+                pdf.text(`${ipdp.toFixed(3)} mm/golpe`, 175, y, { align: 'center' });
+                pdf.line(15, y+2, 195, y+2);
+                y += 8;
+            });
+
+            // Resumo Técnico Final
+            y += 6;
+            if (status === "APROVADO") {
+                pdf.setFillColor(209, 250, 229);
+                pdf.setDrawColor(16, 185, 129);
+            } else {
+                pdf.setFillColor(254, 226, 226);
+                pdf.setDrawColor(239, 68, 68);
+            }
+            pdf.rect(15, y, 180, 18, 'FD');
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFontSize(11);
+            pdf.setTextColor(status === "APROVADO" ? 6 : 153, status === "APROVADO" ? 95 : 27, status === "APROVADO" ? 70 : 27);
+            pdf.text(`IPD Final Obtido: ${ipdFinal.toFixed(3)} mm/golpe (Limite Máx: ${limite.toFixed(1)})`, 105, y + 7, { align: 'center' });
+            pdf.text(`Status do Trecho: ${status}`, 105, y + 13, { align: 'center' });
+
+            pdf.save(`Relatorio_DCP_${os}.pdf`);
+        }
+
+        // CARREGAMENTO INICIAL DO SISTEMA
+        window.onload = function() {
+            calcMetrosul();
+        }
+    </script>
+</body>
+</html>
