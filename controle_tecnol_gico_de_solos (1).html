@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle Tecnológico de Solos</title>
+    <title>Corsan | Controle Tecnológico de Solos</title>
     <!-- Tailwind CSS para Estilização Premium -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome para Ícones -->
@@ -36,13 +36,59 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        :root {
+            --corsan-blue: #0057ff;
+            --corsan-blue-dark: #003ea8;
+            --corsan-sky: #eaf2ff;
+            --glass: rgba(255,255,255,0.78);
+        }
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(0,87,255,.16), transparent 34rem),
+                radial-gradient(circle at bottom right, rgba(21,76,129,.12), transparent 28rem),
+                #f5f8fc;
+        }
+        .corsan-logo {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .corsan-logo-card {
+            height: 82px;
+            width: auto;
+            object-fit: contain;
+            margin: 0 auto;
+            filter: drop-shadow(0 14px 20px rgba(0, 87, 255, .12));
+        }
+        .app-shell {
+            backdrop-filter: blur(14px);
+        }
+        .modern-card {
+            background: rgba(255, 255, 255, .86);
+            border: 1px solid rgba(226, 232, 240, .88);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, .08);
+        }
+        .soft-gradient {
+            background: linear-gradient(135deg, #0057ff 0%, #154c81 55%, #0f172a 100%);
+        }
+        .nav-glow {
+            box-shadow: inset 4px 0 0 var(--corsan-blue);
+        }
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(0, 87, 255, .055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 87, 255, .055) 1px, transparent 1px);
+            background-size: 26px 26px;
+        }
+
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
-        .custom-scrollbar::-webkit-scrollbar-slice {
+        .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 4px;
         }
@@ -51,89 +97,109 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- TOPBAR -->
-    <header class="bg-geotech text-white shadow-md px-6 py-4 flex flex-wrap justify-between items-center border-b border-blue-900">
-        <div class="flex items-center space-x-3">
-            <div class="bg-white/10 p-2.5 rounded-lg">
-                <i class="fa-solid fa-vial-circle-check text-2xl text-blue-300"></i>
+    <header class="soft-gradient text-white shadow-xl px-6 py-4 flex flex-wrap justify-between items-center border-b border-white/10 sticky top-0 z-30">
+        <div class="flex items-center space-x-4">
+            <div class="bg-white rounded-2xl px-3 py-2 shadow-lg shadow-blue-950/10">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT0AAACfCAIAAAAEWpmbAAAQAElEQVR4AeydC3QUVZrHq6vz6CSdpJM0CQm4gKPgDjC6mj2gHBxFdD0qYdfICCgPH4CigA9wUJRhEDTCiPJQB8QFRAFhs3MkR1YZFBcXDx5wdxXcGd+wEPKgyYN0np3umn91hU6nU11d3elOupM/50tTVff77r31u/df99atfogS/5EACcQaAVHgPxIggVgjQN3GWouxviQgCNQtewEJxB4B6la7zZhKAtFIgLqNxlZhnUhAmwB1q82HqSQQjQSo22hsFdaJBLQJULfafJiqTYCpPUOAuu0Z7iyVBLpCgLrtCj3GkkDPEKBue4Y7SyWBrhCgbrtCj7EkoE0gUqnUbaTIMl8SiBwB6jZybJkzCUSKAHUbKbLMlwQiR4C6jRxb5kwCkSLQW3QbKT7MlwSikQB1G42twjqRgDYB6labT1dTK6udp8oc359uoeknUN/k6ir33h5P3Ya5hdHnSg7XP7O5auT8ckNhac7s8sGPVw5ddG7oUzaaLgIPVf5U6ghzq/S67KjbsDXpZ1813r3ynPmesoLXa1cdbi5vlKyZotUiWlPdZjZYe9Bip2ghTTQlGMLWKr00I+o2DA0LxV46t/z6ouriH1plrSYbMuLCkC2zIAF/BKhbf2R0HcesuGBZ5fUvVtU5JAynlKsuanTqMgHqNnSEGGbN08r2nXJiJhx6LowkgeAJULfBM3NHrCuuvX55FW5fOca6ecT4S6xVn7oNpcVe2lGzYI8dt7KhBDOGBLpMgLoNGuGmkguL99Zzbhw0OJ0BkqTTsS+7UbfBtT7uaedsrdMjWluzZLNLtipXdauQGm+g6SRgTGKfDNwnySgwI48HVo+vX1EVcHpsq3P1TzJsnGT+bpVVKh7QuiX3p9f703QSAK7LL0nwMOeGKoHu1q1qJWLl4JQim9GsRczWIEGxR57LOr6u/+wJaex/sdKyMVdPrV4YcycT0QpjhlzyV4fG6jGmxGvvTIFiRw03RbQmzJwEqFu9fWDGxlqN21qI9tDSzPmF6Xqzox8JdIEAdasLHgbbn6v9fkhFEe3YK5N05UUnEugyAepWF8LVf6ozmtTf7I572rVTzeESra7a0KnPE6BuA3cBLCOXHPd7ZzsiS+T0ODBEeoSVAHUbGOcnXzYK/gbbOtfmOZbAWdCDBMJKgLoNjPPj/20y+vlE6IhsI1ePAxOkR7gJULeBie79Rv3rF2zN0rybkwPH0yN8BJiTQoC6VThovf5c4VR/bOsQbryKj2q10DEtQgSo2wBgK6udQrwfn1aJ74jyg4aHI0uAug3At1HjuwWT1J8MBciRySTQZQLUbQCELa2SYFDX5xDN9yp75/v829V3rzw3rYgWgAAo7frY7o2O26oE/OlW1ZkHOxBwuKQO+/53Tpxu3f2tY+e3rTRtArtPOJodeqn65937U6jb7mjjBKNgNBqwuEXTJiBI0tWX80N8gfukGNiFHiTQbQQSDCN/kdhtpcVuQdRt7LZdb6u5rUHaOjW1t51VZM6Hug2NK6PCTKC6VRiRJc64lbrVBZa61YWJThElANEi/yOrsvFK00OAutVDiT6RIgDF2upc4/KMtW/kpJjYG/VyJim9pCLkZ1O+9tEuyV/+2Ndeq1xjc8QDCzP2r8ymaIPqYNRtULjC7AzRrp2YcuTZzEOLM3qXBT6dr1dk2d/NPViUc1M+P5sRdL+iboNGFs4ApzB8UPyo4aaxVyb1NcPzHo6xIfcl6jZkdAwkgR4jQN32GHoWTAIhE6BuQ0bHQBIImUBXA6nbrhJkPAl0PwHqtvuZs0QS6CoB6rarBBlPAt1PgLrtfuYskQS6SqC367arfBhPAtFIgLqNxlZhnUhAmwB1q82HqSQQjQSo22hsFdaJBLQJULfafHp7Ks8vNglQt7HZbqx13yZA3fbt9ufZxyYB6jY224217tsEqNu+3f48e20C0ZpK3UZry7BeJOCfAHXrnw1TSCBaCVC30doyrBcJ+CdA3fpnwxQSiFYC0aLbaOXDepFANBKgbqOxVVgnEtAmQN1q84lsqjXZMP6VGkNhaV+0e84WLKvc9mFdfZMrspR7Y+7UbQ+3KqRrzRT7oiUb9p1yztxeZ55WBvX2cDPEWvHUbWy0WK+sZUacIF+2LOLMrRdmrbH1ynOM0ElRtxECy2yDIGBNFTd/2fLM5qogYvq2K3Xbt9s/as4eA++L/9H45bfNUVOjqK4IdRvVzdOnKmdME+dvrulTpxzyyVK3IaNjYJgJ4Hb3859aS8+1hpBvXwuhbvtai0f3+ZoM//0dp8qB24i6Dcyo6x61TZKzxmWjBSIg1Li+PePoOvBenwN1q6OJJUnVqcmpeljl4M7FVvvOXPt2WiACxXkPT0xTIchDHQlQtx15dNpLNvlFhPGzk7v6gRSTSNNPQB0ij3oR8NspvXy8N/vctiVVFPxN3IxCZbXuMbfPkeMJR5AAdRsALkYJIcWg7mQ0fPF/TepJPEoCkSRA3Qame+8v46vVnk0YEwy7P2sIHE8PEgg3Aeo2MNHxV5mcTpWlKTxvfOdoC6fKgQnSI9wEqNvARMeMMAmNKrpFpDFNXPGO91t8cIxGAhEnQN0GRnzZwPgh/YyqU2UMuesPNfFdtYEh0iOsBKhbXTh/V5CiOlVGsNUi5i8/zw9/AwWt2whQt7pQz7g11d9UGfFYoLrisQpKFyho3UOAutXLee1ks61Z/S4Xs+WyZiH94YpTZf4e9eotpbf78fzCQ4C61ctxfmG60ejnQa4gQLqwwY9Wriuu1Zsj/UggVALUbRDkDi/MsFW5NAKsmeKC9+sN95yFevl5NA1QTOoiAeo2CICjhpueuyPZ1qA+W1YysiYarMkGqHfgvIp+s8pmrbE9/3Y1ZEzTSeClHTV8JK70JY1X6lYDjkrS8vsybh4c5+9G1xMgqzdVZrvluGPpgUbImKaTwOI99bX2Pvuub08PCrAh960ALkzuSGD/yux8q6j6OLejo7yHm15ZwxiEafoICCa/iwgyUP65CVC3bgxBvhxd039sjhhw1A0yV7qTgF4C1K1eUj5+B4ty5v1joq1Oa5nKJ4S7JBAuAtRt6CTXzcvaO89iq3HpnDOHXhIjSaAjgb6q244UQt6bMCbFvj137tUJeD5E9YaMkYHBEqBugyXm659iEjHwntyQ/Wi+rF48JaKAfRlxP9wEqNvwEB2UG//qI1n2d3OLZ6fNGBGP+17Z7BJkjOUrmn4CQpPW4/HwtFbs50LdhrMNMfbe+WvzW09apV0DTr6SfWhxxs770zZOMq+dmELTSWD15JR0szGcrdIb86JuI9WqGIHHXpk0+Sbz7Alp8wvTY8x6rsIL77ZkZ1C3AboldRsAEJNJIAoJULdR2CisEgkEIEDdBgDEZBKIQgLUbRQ2CqsU9QR6uoLUbU+3AMsngeAJULfBM2MECfQ0Aeq2p1uA5ZNA8ASo2+CZMYIEeppAtOu2p/mwfBKIRgLUbTS2CutEAtoEqFttPkwlgWgkQN1GY6uwTiSgTYC61eajnvrZV42PvXa+36wyw6RSQ2GpYXLpmEUVf3hP7xeIlp5rhTNCECiHTyq9dG75M5urtH8fbF1xLaJ8TNndVHLh42MN6nX1OlpyuP6Bl21x97mrjZpPOXvj4gpkq+cXUrZ9WFewrNIw5aynws+/XV1ZLX/xIsKxjZq8tKMGZLwKFHZ9bMdBJUk5/v3plnZ0qMP0s7PW2L74pklJ5atOAtStTlBtbsd/bL7kobLri6o3HGvBIatFtGaK1lTxuxrXog8acu4vRw/GcQ1Drx04uwLOCEGgHG4R/79RWnW4Of93NojZ34+VvPpxI6JUbc4e+/hXaqAoKES1aFQbci3YULvthEP+iklUG2Y2fFbhWvB+vfmesn//T7tqIA4iCdeXmdvr9p1yWs0GT4WXHmjE+eKSAZ+lf2pAxRbvrf+fH2QsOKLYB0cbF5e0JeHI0i3VQ+efa0eHOiQathx3jF52/u6V5+BA00mAutUJSnbDmPOrhbYmp4Dui94vfxa8wf3J+AapulWQv2/VKi79qPGWJZWyd6c/jE4Qz9ovmq1WEc4IkT9V787B6ZSQIWT8hc01eG6l6uCZZXIX4f42U6PR4GPWZFlRi/Y2dC4dokW1UR1UG682u2SrcclW50K5qAmkWLiuFvpEqo/hKlP4Ri0qhvyRJFcY4XapLdAqztlhX/JWtdGtQCHBYEro8C2q2DWaDChiSKYRV7Tn9zfi3OV8mt3c3L+3JJ+4Rdz9rQPXLCTR9BAQ9TjRBwQwyZz55gVPt4PqVt+efOBxy6GnMopnpxVeFgclwA39+8+nW+evP49tb8NkMufRCrmPJso9G85zr05AIMKRyfLxSZAT8pQdrOL4ldXaU0fE3jcyXjFs3zbIiAwRLpd+shVTU++ixxVVGS0icobqHs1P+G6V1b49F3bylWy5XPdXUirSRSW9AzF6r/2vZogWB1G9cXnGvXPTv16RBSt+IG1wqgEZ4lqA8ROZw0fD6hzS7w82wRn1BKutU1Nx1ngdahGRCQKh7c/POpXRG7s0bQKidjJTFQIYKgvW1KBzY9dW50J3b92Su/Buy035yWOvTLrz1+b3lvQ7siwLSXBAF1z/aRNGOWx7bEqRzegei6Au9PiKTf3XzctCIMKRyXPTM6SdefIX3Lh/xARXh9ErqnxU5MnKZBQQ++YTVsWwvXdZNjJUxAPpLi6u9zijGqgVklDugusSX30k6/JLElJMImxQbjzK3TozDQ5IFeKFf/u0PfCHM45Fu+qhNGQFsRU/lLZ/ZfaEMSkjf5EIQ82Prum/cbIZScgcPgENbpDo10VWsJpxayrOGq+HV+cU3Z6M4whHzTF6YyOM1luzom51tewLO2qMaTIrzI2X35aM7t45bNRw06GnM6EBJMF51Z4L2FAMg2fJX+UbS+z+XZIBPV71Kx3eetJ6/9UJsoTgFy+s2R3ET/shw11z0hUBYL7qWeLCFUdw/4ygs0W66SoTMvYxiGfBWNNTYxKfHp/knbRkW43RIuII8tz5UDqEim0fmz0hbfVdKWDic1x111bl+q7ICs37pP52quW6vPYvuPDU3MeNu94E5Ibx3ue2KoG1nzRhuEASxlJV0SIJhsHzhsFxEB6c3znavkKzoaTOmCSjhqrffzIDnv4M0oXAkIqClpY0YEO/XTYgXnC6v1RNFGrq5JVexJpRrvu72THar9/XPpwiyWMYhF94MBMGDSsHMdTvPtaCs8DuiCxx8k1mbKgaJh2401ZN8j4IJvNuMGGo9z7o2X7yjhRcHeTdeOH7Mw55g3+aBOTOpOnARAGjJUYwgMDAsrIgBRsadrAoB1Poc2/mSsUDPG7QsKKB/Dxj5wHH46ZsrC5IRkHydpwhqMHnh1KHMrQKLsGS2jaCYRYgtMpiRgU+OevEwhjWh7DuJY/Dchnqf0dONAnJ7vvwZmnJRL+iVYLX3HGxwsq+2quzSbpnnF90AnBpcQAACDRJREFUlw+MR52VuAsN7suMssNXPwSoWz9gvA7/XN6Kez/5gEO4ZmiivBHMH57WKuFQ4135KjNVn8zGjjAJypAjCqfKlS0fF5VdlPJPr9XiFlFOa5GuGdZez72PWWw2F45DujA8v8FDo5zZ5YbpZx942bbtwzrEItXbfixrFRThO4Thg+O9kzpvj7oisa3CndM8RyRpSJ7ffNKSRUGSLy4ed25oEwiXbrVLie3Uyhpn2wlIktV9l9u2q++/RvfTDsU3IzUw8ExPEUahrlGlN+NB1Kw1NkjOY7csqRw4V16sRimYim+cmYoNj2Ex6cCSDExEsSaM+SqmtZC3/OQ50bDthGPmjrqBD1UgK48/NtoHPUnKyYzDEQ1L1vMLeg4Bd+AamTApKAKBu1FQ2fVK5/SUi5QMhvYOrftU45WBy+2vJ/yCe0lZdncKifHyZFXe7vi35bgDkvMYJsDQITSJtR8sL2G5qKO7gMVb6d28A09asP7093h+U+WChjH+ww030tZM8V+/ahk5vxy7iskDoLKFU653KZv+Xlta/aXweKQIXOyRkcq/N+Q70GoUlBE3XvjmpN6Jq+fM8bhFaJb3MNAd+kuLvKX5d+LnFmVejVu+If3VxzqnU37nA16RE6a+MIh2yrC4I8uzsLyEg6oG9SL1+Lr+uPfGM9idM9IQgvEZzlDviXMuzJmxDcvNvHjKovCXUwHq3F5hRNK6hQB1GxjzaNxwun/8Ap17/YfqS7KeXJ7ZXFWwrBI2ZlEFVmWV4zf/Mh66grpKvnF0vplUfDyvv99bD4XLu03SqOHq98NrJ6asvj0Zr/IjX/c8HBr+l2uT/PnLuXX8w/IYVom3L+535LksjL1INJoM+75swgbsatzGt8hTdKxCv/nnAKe8YX89yCCK1m0EqNvAqFNM4oSRsvDg+vkZp+r7AZEEO1XmePGDxn2nnCU/tbY4JQTiIGzebSlYUMWG0Sze+7LvW6lw3GPrimt/rnVB4dD5vHHqojUZhfmF6XgAg1c8NxpilhsRyilcV9v5orCp5AIWkGG4oHhK8d6A1JU3V6DQMzVtU+IB/eKuGywP9TiIJ8/yirp3jNc2aBwra4vyOszNyBKQmzyyJfSK3FdOS3dekHsnunjhhtqSwypDUGW1M3+pzWqV31EotEhFU9M8p46VoSEZMmrI4NOzTn/vocc0dcEuu9X9AMZZ43r2XosnB42Nj57OVJaLjWniP79o8/G80OBauq8Ba8gvftQIjfmkYheTApv7rY64UlyaJVcSB2FrZqbb3DK2poqjV1R9f1pltgw9gwaYwJ/WnQTa26k7S425sjCrXD4xWZlPYgWoYEMtZsJ4CooBFnI9/mMzxsmch9vWdbDe85uRCbiZ9D7Ng5iOuh/GYGAs/qEVz2AwEiIQ4cgEFwLMq2dur0PmiIJgdj6arnMB9vJLEoompaBQXBSOVbhQE+Tgsem3pOLuGoUi58I3anFp8CRhAxUY/VQllIltzAgw08aGYhiHH7w2EdliF8oc+sS5pVuqoV7oHIbAx147P3rZeWQLB1o3E6Bu9QJ/bnrG/fkJbdI1GzAZxlPQwY9XQq6/evb8gvfrld6Pjp5vFd9b0s8n30G58ceKrFjvxbAGgUFIc/bYEYhwZFLweq38sT73SAuf1Xel4ObTJweN3d9OtbTNlpMNC3bYoS6PM8S/dU4aLgQ4ghriqY+hsLTfrLJL55YbJpWiAuXuR02oVX6u6PNmxjefsN6QZ8QDJDnWIj5/sHHoUzbztDIYAjcca7FaRJzvtQO8VszhSos8Aeo2CMa4mdw41QxdobPK2ks2QAmymeWPqqHrI2nBqMSja/qrZnrNsMQzf8z5hwwD5qVwhnQxjsnhqaIyN4ZCYAeezsC9a+ccmloFRMHw/LZz6v5nsjBbRipmy9ct73ALPePW1I3TU5VUudBMudHrHBJUhwogBPUZmyN++kJ252wPFuU8faOpPRZnahGVQDjjcvDgVQmbF2ThxJFP53dfuCTB6ZQ/5Ii1cfj7NwGxSg5N7vUwLU+mCYLchOSgnwAejdrfzcVaLhaH0FnR42WrkR+Hyh+Re7Xfq49kaeSG9R6o+sDCjCnD4tDp5dg6l/xa5RpqEbdOS8VTVp8Jtie30YPjCi+T7dZfyCtGnuPKxmUD4zfen3rbICN8MAD6zIdR7TObcvDwFlecDuXWuOCP+kCfnlU0JUPPKx4dnXw9G2eHa0p7bJVrXJ7x0LOZGJPhefMV8chnwrA4n/elDO5n/M0wOQkr6nDzZ3FxBk8O8lM3f348fpEAdXuRhO7/0b8xHp7+Yy4EfPKV7O//IH+GTtqZB8XiVlNPNlAmHsBIewZUvNEf4WfW5+CB6uHVORgYNcKhEEy/YYhVdYM49y7LhgNeO2eFSwYUKL2dZ9+e21btN/qjDvBHfVQz9BzEJB9nh2tKxSa5wghHhfevzB57pfwRIkzFsY18UK7PTBs3FzgOg4Mnt84bqBsc4NY5h87OPAIC1C0ghGgQMDo0Bjp03NCyQCDC0WtDCw8tqivVViqMsw6taEaFiwB1Gy6SzIcEIkfAN2fq1pcI90kg+glQt9HfRqwhCfgSoG59iXCfBKKfAHUb/W3EGpKALwHqtiMR7pFALBCgbmOhlVhHEuhIgLrtyIN7JBALBKjbWGgl1pEEOhKgbjvy4J42AaZGBwHqNjragbUggWAIULfB0KIvCUQHAeo2OtqBtSCBYAhQt8HQoi8JaBPorlTqtrtIsxwSCB8B6jZ8LJkTCXQXAeq2u0izHBIIHwHqNnwsmRMJdBeBvwEAAP//D1ZA+wAAAAZJREFUAwBGjRvhn8v9KAAAAABJRU5ErkJggg==" alt="Logo Corsan" class="corsan-logo">
             </div>
             <div>
-                <h1 class="font-bold text-lg tracking-wide">Laboratorio-Metrosul</h1>
-                <p class="text-xs text-blue-200">Controle Tecnológico de Campo & Compactação v2.0</p>
+                <h1 class="font-extrabold text-xl tracking-tight">Laboratório Metrosul</h1>
+                <p class="text-xs text-blue-100">Controle Tecnológico de Campo & Compactação • Corsan</p>
             </div>
         </div>
-        <div class="flex items-center space-x-4 mt-2 sm:mt-0">
-            <span class="bg-blue-800/60 px-3 py-1.5 rounded-full text-xs font-semibold text-blue-100 flex items-center gap-2 border border-blue-700/50">
-                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> Servidor Local Ativo
+        <div class="flex items-center space-x-3 mt-3 sm:mt-0">
+            <span class="bg-white/12 backdrop-blur px-3 py-1.5 rounded-full text-xs font-semibold text-blue-50 flex items-center gap-2 border border-white/15">
+                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> Sistema ativo
             </span>
         </div>
     </header>
 
     <!-- MAIN CONTAINER -->
-    <div class="flex flex-1 flex-col md:flex-row">
+    <div class="flex flex-1 flex-col md:flex-row app-shell">
         
         <!-- SIDEBAR DE NAVEGAÇÃO -->
-        <nav class="w-full md:w-64 bg-white border-r border-slate-200 p-4 flex flex-col justify-between">
+        <nav class="w-full md:w-72 bg-white/85 backdrop-blur-xl border-r border-slate-200/80 p-4 flex flex-col justify-between shadow-sm">
             <div class="space-y-1">
+                <div class="modern-card rounded-2xl p-4 mb-5 text-center">
+                    <img src="data:image/png;base64,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" alt="Logo Corsan" class="corsan-logo-card">
+                    <p class="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-blue-700">Controle tecnológico</p>
+                </div>
                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 block mb-3">Módulos de Trabalho</span>
                 
-                <button onclick="switchTab('home')" id="btn-home" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-brand-50 text-brand-700">
+                <button onclick="switchTab('home')" id="btn-home" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all bg-blue-50 text-blue-700 nav-glow shadow-sm">
                     <i class="fa-solid fa-house text-lg w-6 text-center"></i>
                     <span>Início / Painel Geral</span>
                 </button>
                 
-                <button onclick="switchTab('metrosul')" id="btn-metrosul" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                <button onclick="switchTab('metrosul')" id="btn-metrosul" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900">
                     <i class="fa-solid fa-weight-hanging text-lg w-6 text-center"></i>
                     <span>Densidade In Situ</span>
                 </button>
                 
-                <button onclick="switchTab('corsan')" id="btn-corsan" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                <button onclick="switchTab('corsan')" id="btn-corsan" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900">
                     <i class="fa-solid fa-arrow-down-up-lock text-lg w-6 text-center"></i>
                     <span>Ensaio DCP</span>
                 </button>
             </div>
             
             <div class="pt-4 border-t border-slate-100 mt-6 md:mt-0">
-                <div class="bg-slate-50 rounded-lg p-3 text-xs border border-slate-200">
+                <div class="rounded-2xl p-4 text-xs border border-blue-100 bg-gradient-to-br from-blue-50 to-white shadow-sm">
                     <p class="font-semibold text-slate-700 mb-1">Engenharia de Solos</p>
-                    <p class="text-slate-500 leading-relaxed">Conformidade com especificações técnicas Metrosul, Corsan e normas DNIT vigentes.</p>
+                    <p class="text-slate-500 leading-relaxed">Interface modernizada com identidade Corsan, cálculos em tempo real e relatórios técnicos em PDF.</p>
                 </div>
             </div>
         </nav>
 
         <!-- AREA DE CONTEÚDO PRINCIPAL -->
-        <main class="flex-1 p-6 lg:p-8 overflow-y-auto">
+        <main class="flex-1 p-5 lg:p-8 overflow-y-auto">
 
             <!-- ================= HOME TAB ================= -->
-            <div id="tab-home" class="space-y-6 max-w-2xl mx-auto py-12">
-                <h2 class="text-2xl font-bold text-slate-800 text-center mb-8">Selecione o Módulo de Ensaio</h2>
-                
-                <div class="grid grid-cols-1 gap-6">
-                    <!-- Botão 1 -->
-                    <button onclick="switchTab('metrosul')" class="flex items-center justify-between bg-geotech hover:bg-blue-900 text-white p-6 rounded-xl shadow-md transition-all group">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-white/10 p-3 rounded-lg text-xl">
+            <div id="tab-home" class="space-y-8 max-w-5xl mx-auto py-10">
+                <section class="modern-card hero-grid rounded-3xl p-8 md:p-10 overflow-hidden relative">
+                    <div class="absolute -right-14 -top-14 w-56 h-56 bg-blue-500/10 rounded-full blur-2xl"></div>
+                    <div class="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-center">
+                        <div>
+                            <span class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide">
+                                <i class="fa-solid fa-shield-halved"></i> Padrão Corsan
+                            </span>
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mt-4 tracking-tight">Controle Tecnológico de Solos</h2>
+                            <p class="text-sm md:text-base text-slate-500 mt-3 max-w-2xl leading-relaxed">
+                                Painel para ensaios de compactação e DCP com visual mais limpo, leitura rápida dos resultados e emissão de relatório técnico.
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-3xl p-6 shadow-xl shadow-blue-900/10 border border-blue-50">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT0AAACfCAIAAAAEWpmbAAAQAElEQVR4AeydC3QUVZrHq6vz6CSdpJM0CQm4gKPgDjC6mj2gHBxFdD0qYdfICCgPH4CigA9wUJRhEDTCiPJQB8QFRAFhs3MkR1YZFBcXDx5wdxXcGd+wEPKgyYN0np3umn91hU6nU11d3elOupM/50tTVff77r31u/df99atfogS/5EACcQaAVHgPxIggVgjQN3GWouxviQgCNQtewEJxB4B6la7zZhKAtFIgLqNxlZhnUhAmwB1q82HqSQQjQSo22hsFdaJBLQJULfafJiqTYCpPUOAuu0Z7iyVBLpCgLrtCj3GkkDPEKBue4Y7SyWBrhCgbrtCj7EkoE0gUqnUbaTIMl8SiBwB6jZybJkzCUSKAHUbKbLMlwQiR4C6jRxb5kwCkSLQW3QbKT7MlwSikQB1G42twjqRgDYB6labT1dTK6udp8oc359uoeknUN/k6ir33h5P3Ya5hdHnSg7XP7O5auT8ckNhac7s8sGPVw5ddG7oUzaaLgIPVf5U6ghzq/S67KjbsDXpZ1813r3ynPmesoLXa1cdbi5vlKyZotUiWlPdZjZYe9Bip2ghTTQlGMLWKr00I+o2DA0LxV46t/z6ouriH1plrSYbMuLCkC2zIAF/BKhbf2R0HcesuGBZ5fUvVtU5JAynlKsuanTqMgHqNnSEGGbN08r2nXJiJhx6LowkgeAJULfBM3NHrCuuvX55FW5fOca6ecT4S6xVn7oNpcVe2lGzYI8dt7KhBDOGBLpMgLoNGuGmkguL99Zzbhw0OJ0BkqTTsS+7UbfBtT7uaedsrdMjWluzZLNLtipXdauQGm+g6SRgTGKfDNwnySgwI48HVo+vX1EVcHpsq3P1TzJsnGT+bpVVKh7QuiX3p9f703QSAK7LL0nwMOeGKoHu1q1qJWLl4JQim9GsRczWIEGxR57LOr6u/+wJaex/sdKyMVdPrV4YcycT0QpjhlzyV4fG6jGmxGvvTIFiRw03RbQmzJwEqFu9fWDGxlqN21qI9tDSzPmF6Xqzox8JdIEAdasLHgbbn6v9fkhFEe3YK5N05UUnEugyAepWF8LVf6ozmtTf7I572rVTzeESra7a0KnPE6BuA3cBLCOXHPd7ZzsiS+T0ODBEeoSVAHUbGOcnXzYK/gbbOtfmOZbAWdCDBMJKgLoNjPPj/20y+vlE6IhsI1ePAxOkR7gJULeBie79Rv3rF2zN0rybkwPH0yN8BJiTQoC6VThovf5c4VR/bOsQbryKj2q10DEtQgSo2wBgK6udQrwfn1aJ74jyg4aHI0uAug3At1HjuwWT1J8MBciRySTQZQLUbQCELa2SYFDX5xDN9yp75/v829V3rzw3rYgWgAAo7frY7o2O26oE/OlW1ZkHOxBwuKQO+/53Tpxu3f2tY+e3rTRtArtPOJodeqn65937U6jb7mjjBKNgNBqwuEXTJiBI0tWX80N8gfukGNiFHiTQbQQSDCN/kdhtpcVuQdRt7LZdb6u5rUHaOjW1t51VZM6Hug2NK6PCTKC6VRiRJc64lbrVBZa61YWJThElANEi/yOrsvFK00OAutVDiT6RIgDF2upc4/KMtW/kpJjYG/VyJim9pCLkZ1O+9tEuyV/+2Ndeq1xjc8QDCzP2r8ymaIPqYNRtULjC7AzRrp2YcuTZzEOLM3qXBT6dr1dk2d/NPViUc1M+P5sRdL+iboNGFs4ApzB8UPyo4aaxVyb1NcPzHo6xIfcl6jZkdAwkgR4jQN32GHoWTAIhE6BuQ0bHQBIImUBXA6nbrhJkPAl0PwHqtvuZs0QS6CoB6rarBBlPAt1PgLrtfuYskQS6SqC367arfBhPAtFIgLqNxlZhnUhAmwB1q82HqSQQjQSo22hsFdaJBLQJULfafHp7Ks8vNglQt7HZbqx13yZA3fbt9ufZxyYB6jY224217tsEqNu+3f48e20C0ZpK3UZry7BeJOCfAHXrnw1TSCBaCVC30doyrBcJ+CdA3fpnwxQSiFYC0aLbaOXDepFANBKgbqOxVVgnEtAmQN1q84lsqjXZMP6VGkNhaV+0e84WLKvc9mFdfZMrspR7Y+7UbQ+3KqRrzRT7oiUb9p1yztxeZ55WBvX2cDPEWvHUbWy0WK+sZUacIF+2LOLMrRdmrbH1ynOM0ElRtxECy2yDIGBNFTd/2fLM5qogYvq2K3Xbt9s/as4eA++L/9H45bfNUVOjqK4IdRvVzdOnKmdME+dvrulTpxzyyVK3IaNjYJgJ4Hb3859aS8+1hpBvXwuhbvtai0f3+ZoM//0dp8qB24i6Dcyo6x61TZKzxmWjBSIg1Li+PePoOvBenwN1q6OJJUnVqcmpeljl4M7FVvvOXPt2WiACxXkPT0xTIchDHQlQtx15dNpLNvlFhPGzk7v6gRSTSNNPQB0ij3oR8NspvXy8N/vctiVVFPxN3IxCZbXuMbfPkeMJR5AAdRsALkYJIcWg7mQ0fPF/TepJPEoCkSRA3Qame+8v46vVnk0YEwy7P2sIHE8PEgg3Aeo2MNHxV5mcTpWlKTxvfOdoC6fKgQnSI9wEqNvARMeMMAmNKrpFpDFNXPGO91t8cIxGAhEnQN0GRnzZwPgh/YyqU2UMuesPNfFdtYEh0iOsBKhbXTh/V5CiOlVGsNUi5i8/zw9/AwWt2whQt7pQz7g11d9UGfFYoLrisQpKFyho3UOAutXLee1ks61Z/S4Xs+WyZiH94YpTZf4e9eotpbf78fzCQ4C61ctxfmG60ejnQa4gQLqwwY9Wriuu1Zsj/UggVALUbRDkDi/MsFW5NAKsmeKC9+sN95yFevl5NA1QTOoiAeo2CICjhpueuyPZ1qA+W1YysiYarMkGqHfgvIp+s8pmrbE9/3Y1ZEzTSeClHTV8JK70JY1X6lYDjkrS8vsybh4c5+9G1xMgqzdVZrvluGPpgUbImKaTwOI99bX2Pvuub08PCrAh960ALkzuSGD/yux8q6j6OLejo7yHm15ZwxiEafoICCa/iwgyUP65CVC3bgxBvhxd039sjhhw1A0yV7qTgF4C1K1eUj5+B4ty5v1joq1Oa5nKJ4S7JBAuAtRt6CTXzcvaO89iq3HpnDOHXhIjSaAjgb6q244UQt6bMCbFvj137tUJeD5E9YaMkYHBEqBugyXm659iEjHwntyQ/Wi+rF48JaKAfRlxP9wEqNvwEB2UG//qI1n2d3OLZ6fNGBGP+17Z7BJkjOUrmn4CQpPW4/HwtFbs50LdhrMNMfbe+WvzW09apV0DTr6SfWhxxs770zZOMq+dmELTSWD15JR0szGcrdIb86JuI9WqGIHHXpk0+Sbz7Alp8wvTY8x6rsIL77ZkZ1C3AboldRsAEJNJIAoJULdR2CisEgkEIEDdBgDEZBKIQgLUbRQ2CqsU9QR6uoLUbU+3AMsngeAJULfBM2MECfQ0Aeq2p1uA5ZNA8ASo2+CZMYIEeppAtOu2p/mwfBKIRgLUbTS2CutEAtoEqFttPkwlgWgkQN1GY6uwTiSgTYC61eajnvrZV42PvXa+36wyw6RSQ2GpYXLpmEUVf3hP7xeIlp5rhTNCECiHTyq9dG75M5urtH8fbF1xLaJ8TNndVHLh42MN6nX1OlpyuP6Bl21x97mrjZpPOXvj4gpkq+cXUrZ9WFewrNIw5aynws+/XV1ZLX/xIsKxjZq8tKMGZLwKFHZ9bMdBJUk5/v3plnZ0qMP0s7PW2L74pklJ5atOAtStTlBtbsd/bL7kobLri6o3HGvBIatFtGaK1lTxuxrXog8acu4vRw/GcQ1Drx04uwLOCEGgHG4R/79RWnW4Of93NojZ34+VvPpxI6JUbc4e+/hXaqAoKES1aFQbci3YULvthEP+iklUG2Y2fFbhWvB+vfmesn//T7tqIA4iCdeXmdvr9p1yWs0GT4WXHmjE+eKSAZ+lf2pAxRbvrf+fH2QsOKLYB0cbF5e0JeHI0i3VQ+efa0eHOiQathx3jF52/u6V5+BA00mAutUJSnbDmPOrhbYmp4Dui94vfxa8wf3J+AapulWQv2/VKi79qPGWJZWyd6c/jE4Qz9ovmq1WEc4IkT9V787B6ZSQIWT8hc01eG6l6uCZZXIX4f42U6PR4GPWZFlRi/Y2dC4dokW1UR1UG682u2SrcclW50K5qAmkWLiuFvpEqo/hKlP4Ri0qhvyRJFcY4XapLdAqztlhX/JWtdGtQCHBYEro8C2q2DWaDChiSKYRV7Tn9zfi3OV8mt3c3L+3JJ+4Rdz9rQPXLCTR9BAQ9TjRBwQwyZz55gVPt4PqVt+efOBxy6GnMopnpxVeFgclwA39+8+nW+evP49tb8NkMufRCrmPJso9G85zr05AIMKRyfLxSZAT8pQdrOL4ldXaU0fE3jcyXjFs3zbIiAwRLpd+shVTU++ixxVVGS0icobqHs1P+G6V1b49F3bylWy5XPdXUirSRSW9AzF6r/2vZogWB1G9cXnGvXPTv16RBSt+IG1wqgEZ4lqA8ROZw0fD6hzS7w82wRn1BKutU1Nx1ngdahGRCQKh7c/POpXRG7s0bQKidjJTFQIYKgvW1KBzY9dW50J3b92Su/Buy035yWOvTLrz1+b3lvQ7siwLSXBAF1z/aRNGOWx7bEqRzegei6Au9PiKTf3XzctCIMKRyXPTM6SdefIX3Lh/xARXh9ErqnxU5MnKZBQQ++YTVsWwvXdZNjJUxAPpLi6u9zijGqgVklDugusSX30k6/JLElJMImxQbjzK3TozDQ5IFeKFf/u0PfCHM45Fu+qhNGQFsRU/lLZ/ZfaEMSkjf5EIQ82Prum/cbIZScgcPgENbpDo10VWsJpxayrOGq+HV+cU3Z6M4whHzTF6YyOM1luzom51tewLO2qMaTIrzI2X35aM7t45bNRw06GnM6EBJMF51Z4L2FAMg2fJX+UbS+z+XZIBPV71Kx3eetJ6/9UJsoTgFy+s2R3ET/shw11z0hUBYL7qWeLCFUdw/4ygs0W66SoTMvYxiGfBWNNTYxKfHp/knbRkW43RIuII8tz5UDqEim0fmz0hbfVdKWDic1x111bl+q7ICs37pP52quW6vPYvuPDU3MeNu94E5Ibx3ue2KoG1nzRhuEASxlJV0SIJhsHzhsFxEB6c3znavkKzoaTOmCSjhqrffzIDnv4M0oXAkIqClpY0YEO/XTYgXnC6v1RNFGrq5JVexJpRrvu72THar9/XPpwiyWMYhF94MBMGDSsHMdTvPtaCs8DuiCxx8k1mbKgaJh2401ZN8j4IJvNuMGGo9z7o2X7yjhRcHeTdeOH7Mw55g3+aBOTOpOnARAGjJUYwgMDAsrIgBRsadrAoB1Poc2/mSsUDPG7QsKKB/Dxj5wHH46ZsrC5IRkHydpwhqMHnh1KHMrQKLsGS2jaCYRYgtMpiRgU+OevEwhjWh7DuJY/Dchnqf0dONAnJ7vvwZmnJRL+iVYLX3HGxwsq+2quzSbpnnF90AnBpcQAACDRJREFUlw+MR52VuAsN7suMssNXPwSoWz9gvA7/XN6Kez/5gEO4ZmiivBHMH57WKuFQ4135KjNVn8zGjjAJypAjCqfKlS0fF5VdlPJPr9XiFlFOa5GuGdZez72PWWw2F45DujA8v8FDo5zZ5YbpZx942bbtwzrEItXbfixrFRThO4Thg+O9kzpvj7oisa3CndM8RyRpSJ7ffNKSRUGSLy4ed25oEwiXbrVLie3Uyhpn2wlIktV9l9u2q++/RvfTDsU3IzUw8ExPEUahrlGlN+NB1Kw1NkjOY7csqRw4V16sRimYim+cmYoNj2Ex6cCSDExEsSaM+SqmtZC3/OQ50bDthGPmjrqBD1UgK48/NtoHPUnKyYzDEQ1L1vMLeg4Bd+AamTApKAKBu1FQ2fVK5/SUi5QMhvYOrftU45WBy+2vJ/yCe0lZdncKifHyZFXe7vi35bgDkvMYJsDQITSJtR8sL2G5qKO7gMVb6d28A09asP7093h+U+WChjH+ww030tZM8V+/ahk5vxy7iskDoLKFU653KZv+Xlta/aXweKQIXOyRkcq/N+Q70GoUlBE3XvjmpN6Jq+fM8bhFaJb3MNAd+kuLvKX5d+LnFmVejVu+If3VxzqnU37nA16RE6a+MIh2yrC4I8uzsLyEg6oG9SL1+Lr+uPfGM9idM9IQgvEZzlDviXMuzJmxDcvNvHjKovCXUwHq3F5hRNK6hQB1GxjzaNxwun/8Ap17/YfqS7KeXJ7ZXFWwrBI2ZlEFVmWV4zf/Mh66grpKvnF0vplUfDyvv99bD4XLu03SqOHq98NrJ6asvj0Zr/IjX/c8HBr+l2uT/PnLuXX8w/IYVom3L+535LksjL1INJoM+75swgbsatzGt8hTdKxCv/nnAKe8YX89yCCK1m0EqNvAqFNM4oSRsvDg+vkZp+r7AZEEO1XmePGDxn2nnCU/tbY4JQTiIGzebSlYUMWG0Sze+7LvW6lw3GPrimt/rnVB4dD5vHHqojUZhfmF6XgAg1c8NxpilhsRyilcV9v5orCp5AIWkGG4oHhK8d6A1JU3V6DQMzVtU+IB/eKuGywP9TiIJ8/yirp3jNc2aBwra4vyOszNyBKQmzyyJfSK3FdOS3dekHsnunjhhtqSwypDUGW1M3+pzWqV31EotEhFU9M8p46VoSEZMmrI4NOzTn/vocc0dcEuu9X9AMZZ43r2XosnB42Nj57OVJaLjWniP79o8/G80OBauq8Ba8gvftQIjfmkYheTApv7rY64UlyaJVcSB2FrZqbb3DK2poqjV1R9f1pltgw9gwaYwJ/WnQTa26k7S425sjCrXD4xWZlPYgWoYEMtZsJ4CooBFnI9/mMzxsmch9vWdbDe85uRCbiZ9D7Ng5iOuh/GYGAs/qEVz2AwEiIQ4cgEFwLMq2dur0PmiIJgdj6arnMB9vJLEoompaBQXBSOVbhQE+Tgsem3pOLuGoUi58I3anFp8CRhAxUY/VQllIltzAgw08aGYhiHH7w2EdliF8oc+sS5pVuqoV7oHIbAx147P3rZeWQLB1o3E6Bu9QJ/bnrG/fkJbdI1GzAZxlPQwY9XQq6/evb8gvfrld6Pjp5vFd9b0s8n30G58ceKrFjvxbAGgUFIc/bYEYhwZFLweq38sT73SAuf1Xel4ObTJweN3d9OtbTNlpMNC3bYoS6PM8S/dU4aLgQ4ghriqY+hsLTfrLJL55YbJpWiAuXuR02oVX6u6PNmxjefsN6QZ8QDJDnWIj5/sHHoUzbztDIYAjcca7FaRJzvtQO8VszhSos8Aeo2CMa4mdw41QxdobPK2ks2QAmymeWPqqHrI2nBqMSja/qrZnrNsMQzf8z5hwwD5qVwhnQxjsnhqaIyN4ZCYAeezsC9a+ccmloFRMHw/LZz6v5nsjBbRipmy9ct73ALPePW1I3TU5VUudBMudHrHBJUhwogBPUZmyN++kJ252wPFuU8faOpPRZnahGVQDjjcvDgVQmbF2ThxJFP53dfuCTB6ZQ/5Ii1cfj7NwGxSg5N7vUwLU+mCYLchOSgnwAejdrfzcVaLhaH0FnR42WrkR+Hyh+Re7Xfq49kaeSG9R6o+sDCjCnD4tDp5dg6l/xa5RpqEbdOS8VTVp8Jtie30YPjCi+T7dZfyCtGnuPKxmUD4zfen3rbICN8MAD6zIdR7TObcvDwFlecDuXWuOCP+kCfnlU0JUPPKx4dnXw9G2eHa0p7bJVrXJ7x0LOZGJPhefMV8chnwrA4n/elDO5n/M0wOQkr6nDzZ3FxBk8O8lM3f348fpEAdXuRhO7/0b8xHp7+Yy4EfPKV7O//IH+GTtqZB8XiVlNPNlAmHsBIewZUvNEf4WfW5+CB6uHVORgYNcKhEEy/YYhVdYM49y7LhgNeO2eFSwYUKL2dZ9+e21btN/qjDvBHfVQz9BzEJB9nh2tKxSa5wghHhfevzB57pfwRIkzFsY18UK7PTBs3FzgOg4Mnt84bqBsc4NY5h87OPAIC1C0ghGgQMDo0Bjp03NCyQCDC0WtDCw8tqivVViqMsw6taEaFiwB1Gy6SzIcEIkfAN2fq1pcI90kg+glQt9HfRqwhCfgSoG59iXCfBKKfAHUb/W3EGpKALwHqtiMR7pFALBCgbmOhlVhHEuhIgLrtyIN7JBALBKjbWGgl1pEEOhKgbjvy4J42AaZGBwHqNjragbUggWAIULfB0KIvCUQHAeo2OtqBtSCBYAhQt8HQoi8JaBPorlTqtrtIsxwSCB8B6jZ8LJkTCXQXAeq2u0izHBIIHwHqNnwsmRMJdBeBvwEAAP//D1ZA+wAAAAZJREFUAwBGjRvhn8v9KAAAAABJRU5ErkJggg==" alt="Logo Corsan" class="h-24 w-auto object-contain">
+                        </div>
+                    </div>
+                </section>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <button onclick="switchTab('metrosul')" class="group modern-card hover:-translate-y-1 transition-all duration-300 text-left p-6 rounded-3xl">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="bg-blue-50 text-blue-700 p-4 rounded-2xl text-2xl border border-blue-100">
                                 <i class="fa-solid fa-weight-hanging"></i>
                             </div>
-                            <div class="text-left">
-                                <h3 class="font-bold text-base">Densidade In Situ</h3>
-                                <p class="text-xs text-blue-200 mt-0.5">Frasco de Areia </p>
-                            </div>
+                            <i class="fa-solid fa-arrow-right text-blue-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-lg transition-transform group-hover:translate-x-1"></i>
+                        <h3 class="font-extrabold text-xl text-slate-900 mt-5">Densidade In Situ</h3>
+                        <p class="text-sm text-slate-500 mt-2">Método do frasco de areia, teor de umidade, densidade seca e grau de compactação.</p>
+                        <div class="mt-5 flex items-center gap-2 text-xs font-bold text-blue-700">
+                            <span class="w-2 h-2 rounded-full bg-blue-600"></span> Abrir módulo
+                        </div>
                     </button>
 
-                    <!-- Botão 2 -->
-                    <button onclick="switchTab('corsan')" class="flex items-center justify-between bg-slate-800 hover:bg-slate-900 text-white p-6 rounded-xl shadow-md transition-all group">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-white/10 p-3 rounded-lg text-xl">
+                    <button onclick="switchTab('corsan')" class="group modern-card hover:-translate-y-1 transition-all duration-300 text-left p-6 rounded-3xl">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="bg-slate-900 text-white p-4 rounded-2xl text-2xl shadow-lg">
                                 <i class="fa-solid fa-arrow-down-up-lock"></i>
                             </div>
-                            <div class="text-left">
-                                <h3 class="font-bold text-base">Ensaio DCP</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Cone Penetrométrico </p>
-                            </div>
+                            <i class="fa-solid fa-arrow-right text-blue-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-lg transition-transform group-hover:translate-x-1"></i>
+                        <h3 class="font-extrabold text-xl text-slate-900 mt-5">Ensaio DCP</h3>
+                        <p class="text-sm text-slate-500 mt-2">Leituras sequenciais, IPD acumulado, gráfico dinâmico e limite por material.</p>
+                        <div class="mt-5 flex items-center gap-2 text-xs font-bold text-blue-700">
+                            <span class="w-2 h-2 rounded-full bg-blue-600"></span> Abrir módulo
+                        </div>
                     </button>
                 </div>
             </div>
@@ -146,7 +212,7 @@
                         <h2 class="text-2xl font-bold text-slate-900">Densidade In Situ - Método do Frasco de Areia</h2>
                         <p class="text-xs text-slate-500 mt-1">Conformidade e diretrizes do controle de compactação Metrosul</p>
                     </div>
-                    <button onclick="switchTab('home')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2 px-3 rounded-lg flex items-center gap-2 transition-all">
+                    <button onclick="switchTab('home')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl flex items-center gap-2 transition-all">
                         <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
                     </button>
                 </div>
@@ -156,64 +222,64 @@
                     <!-- Esquerda: Inputs -->
                     <div class="lg:col-span-7 space-y-6">
                         <!-- Identificação -->
-                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                        <div class="modern-card rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
                                 <i class="fa-solid fa-clipboard-list text-geotech"></i> Identificação e Cadastro
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Ordem de Serviço (OS)</label>
-                                    <input type="text" id="m-os" placeholder="Digite a OS..." oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-brand-100 focus:border-geotech outline-none">
+                                    <input type="text" id="m-os" placeholder="Digite a OS..." oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 focus:ring-2 focus:ring-brand-100 focus:border-geotech outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Material do Solo</label>
-                                    <input type="text" id="m-material" placeholder="Ex: Solo Argilo-Arenoso" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-brand-100 focus:border-geotech outline-none">
+                                    <input type="text" id="m-material" placeholder="Ex: Solo Argilo-Arenoso" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 focus:ring-2 focus:ring-brand-100 focus:border-geotech outline-none">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Umidade -->
-                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                        <div class="modern-card rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
                                 <i class="fa-solid fa-droplet text-blue-500"></i> 1. Determinação da Umidade ($w$)
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Tara da Bandeja (g)</label>
-                                    <input type="text" id="m-ua" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-ua" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Solo Úmido + Tara (g)</label>
-                                    <input type="text" id="m-ub" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-ub" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Solo Seco + Tara (g)</label>
-                                    <input type="text" id="m-uc" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-uc" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Densidade -->
-                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                        <div class="modern-card rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
                                 <i class="fa-solid fa-hill-rockslide text-amber-600"></i> 2. Medidas da Cava e Areia
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Inicial Frasco+Areia (g)</label>
-                                    <input type="text" id="m-da" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-da" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Final Frasco+Areia (g)</label>
-                                    <input type="text" id="m-db" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-db" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Areia no Cone (g)</label>
-                                    <input type="text" id="m-dd" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-dd" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Densidade da Areia (g/cm³)</label>
-                                    <input type="text" id="m-df" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-df" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                             </div>
 
@@ -221,15 +287,15 @@
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-100">
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Tara da Bandeja Cava (g)</label>
-                                    <input type="text" id="m-dhtara" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-dhtara" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Massa Úmida + Bandeja Cava (g)</label>
-                                    <input type="text" id="m-dhtotal" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-dhtotal" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Proctor Máximo Laboratório (g/cm³)</label>
-                                    <input type="text" id="m-proctor" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="m-proctor" placeholder="0.000" oninput="calcMetrosul()" class="w-full text-sm border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                             </div>
                         </div>
@@ -237,14 +303,14 @@
 
                     <!-- Direita: Resultados Consolidados -->
                     <div class="lg:col-span-5 space-y-6">
-                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm sticky top-4 space-y-6">
+                        <div class="modern-card rounded-2xl p-6 sticky top-4 space-y-6">
                             <h3 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center justify-between">
                                 <span>Painel de Resultados</span>
                                 <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Tempo Real</span>
                             </h3>
 
                             <!-- Grande Status Box -->
-                            <div id="m-status-card" class="rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2">
+                            <div id="m-status-card" class="rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2">
                                 <span class="text-xs uppercase tracking-wider font-semibold" id="m-status-lbl">CÁLCULO ATIVO</span>
                                 <div class="text-4xl font-extrabold" id="m-gc-val">0.00%</div>
                                 <span class="text-xs text-white/80" id="m-status-desc">Preencha os dados à esquerda</span>
@@ -252,19 +318,19 @@
 
                             <!-- Métricas Rápidas -->
                             <div class="grid grid-cols-2 gap-4">
-                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
                                     <div class="text-[10px] font-semibold text-slate-400 uppercase">Teor de Umidade</div>
                                     <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-umidade">0.00%</div>
                                 </div>
-                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
                                     <div class="text-[10px] font-semibold text-slate-400 uppercase">Vol. do Buraco</div>
                                     <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-volume">0.00 cm³</div>
                                 </div>
-                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
                                     <div class="text-[10px] font-semibold text-slate-400 uppercase">Densidade Seca</div>
                                     <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-densidade-seca">0.000 g/cm³</div>
                                 </div>
-                                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
                                     <div class="text-[10px] font-semibold text-slate-400 uppercase">Massa Solo Úmido</div>
                                     <div class="text-base font-bold text-slate-800 mt-0.5" id="lbl-massa-solo">0.00 g</div>
                                 </div>
@@ -287,7 +353,7 @@
                         <h2 class="text-2xl font-bold text-slate-900">Ensaio DCP (Cone Penetrométrico Dinâmico)</h2>
                         <p class="text-xs text-slate-500 mt-1">Geração dinâmica de perfil e limites regulatórios da Corsan</p>
                     </div>
-                    <button onclick="switchTab('home')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2 px-3 rounded-lg flex items-center gap-2 transition-all">
+                    <button onclick="switchTab('home')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl flex items-center gap-2 transition-all">
                         <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
                     </button>
                 </div>
@@ -297,18 +363,18 @@
                     <!-- Esquerda: Inputs Dinâmicos de Golpes -->
                     <div class="lg:col-span-6 space-y-6">
                         <!-- Metadados da Obra -->
-                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                        <div class="modern-card rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 flex items-center gap-2">
                                 <i class="fa-solid fa-road text-geotech"></i> Localização & Referência
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Ordem de Serviço (OS)</label>
-                                    <input type="text" id="c-os" placeholder="Digite a OS..." oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="c-os" placeholder="Digite a OS..." oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Material de Camada</label>
-                                    <select id="c-material" onchange="alterarMaterial()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none bg-white">
+                                    <select id="c-material" onchange="alterarMaterial()" class="w-full text-xs border border-slate-300 rounded-xl p-2 outline-none bg-white">
                                         <option value="BGS">BGS (Base Granular)</option>
                                         <option value="Solo" selected>Solo Subleito</option>
                                         <option value="Areia">Areia / Sub-base</option>
@@ -316,23 +382,23 @@
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Localização/Trecho</label>
-                                    <input type="text" id="c-local" placeholder="Ex: Trecho A" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="text" id="c-local" placeholder="Ex: Trecho A" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Leitura do Marco Zero (mm)</label>
-                                    <input type="number" id="c-marcozero" value="0.0" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none">
+                                    <input type="number" id="c-marcozero" value="0.0" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-xl p-2 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-medium text-slate-500 mb-1">Limite Máximo IPD (mm/golpe)</label>
-                                    <input type="number" id="c-limite" value="17.0" step="0.1" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-lg p-2 outline-none font-semibold text-slate-700 bg-slate-50">
+                                    <input type="number" id="c-limite" value="17.0" step="0.1" oninput="calcCorsan()" class="w-full text-xs border border-slate-300 rounded-xl p-2 outline-none font-semibold text-slate-700 bg-slate-50">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Grid de Leituras Dinâmicas -->
-                        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+                        <div class="modern-card rounded-2xl p-5 space-y-4">
                             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                                 <h3 class="text-sm font-semibold text-slate-800 flex items-center gap-2">
                                     <i class="fa-solid fa-list-ol text-geotech"></i> Leituras Sequenciais
@@ -346,10 +412,10 @@
 
                             <!-- Ações Rápidas de Linhas -->
                             <div class="grid grid-cols-2 gap-3 pt-2">
-                                <button onclick="addRowDCP()" class="border border-geotech text-geotech hover:bg-brand-50 font-bold py-2 px-3 rounded-lg text-xs flex items-center justify-center gap-2 transition-all">
+                                <button onclick="addRowDCP()" class="border border-geotech text-geotech hover:bg-brand-50 font-bold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
                                     <i class="fa-solid fa-plus"></i> Inserir Linha (+3 Golpes)
                                 </button>
-                                <button onclick="removeRowDCP()" class="border border-red-200 text-red-500 hover:bg-red-50 font-bold py-2 px-3 rounded-lg text-xs flex items-center justify-center gap-2 transition-all">
+                                <button onclick="removeRowDCP()" class="border border-red-200 text-red-500 hover:bg-red-50 font-bold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
                                     <i class="fa-solid fa-trash-can"></i> Remover Linha
                                 </button>
                             </div>
@@ -359,8 +425,8 @@
                     <!-- Direita: Gráficos e Resultados -->
                     <div class="lg:col-span-6 space-y-6">
                         <!-- Card Status -->
-                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-6">
-                            <div id="c-status-card" class="rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 text-white">
+                        <div class="modern-card rounded-2xl p-6 space-y-6">
+                            <div id="c-status-card" class="rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 text-white">
                                 <span class="text-xs uppercase tracking-wider font-semibold" id="c-status-lbl">STATUS DO DCP</span>
                                 <div class="text-4xl font-extrabold" id="c-ipd-val">0.000 mm/g</div>
                                 <span class="text-xs text-white/80" id="c-status-desc">Preencha os dados</span>
@@ -408,13 +474,13 @@
             const buttons = ['btn-home', 'btn-metrosul', 'btn-corsan'];
             buttons.forEach(id => {
                 const btn = document.getElementById(id);
-                btn.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900";
+                btn.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900";
             });
 
             // Mostrar a aba selecionada e destacar botão
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
             const activeBtn = document.getElementById(`btn-${tabId}`);
-            activeBtn.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-brand-50 text-brand-700";
+            activeBtn.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all bg-blue-50 text-blue-700 nav-glow shadow-sm";
 
             // Se for a aba do DCP, renderizar/atualizar o gráfico
             if (tabId === 'corsan') {
@@ -475,15 +541,15 @@
             gcVal.innerText = `${gc.toFixed(2)}%`;
 
             if (gc >= 95.0) {
-                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20";
+                statusCard.className = "rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20";
                 statusLbl.innerText = "SISTEMA APROVADO";
                 statusDesc.innerText = "Grau de Compactação adequado (>= 95%)";
             } else if (gc > 0) {
-                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-rose-600 text-white shadow-lg shadow-rose-600/20";
+                statusCard.className = "rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-rose-600 text-white shadow-lg shadow-rose-600/20";
                 statusLbl.innerText = "RECOMPACTAR CAMADA";
                 statusDesc.innerText = "Grau de Compactação abaixo de 95%";
             } else {
-                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-slate-300 text-slate-600 shadow-sm";
+                statusCard.className = "rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-slate-300 text-slate-600 shadow-sm";
                 statusLbl.innerText = "AGUARDANDO LEITURAS";
                 statusDesc.innerText = "Insira os dados à esquerda";
             }
@@ -504,7 +570,7 @@
             leiturasDCP.forEach((leitura, index) => {
                 let golpes = (index + 1) * 3;
                 let div = document.createElement('div');
-                div.className = "grid grid-cols-12 gap-3 items-center bg-slate-50 border border-slate-200 p-2.5 rounded-lg transition-all hover:bg-slate-100/70";
+                div.className = "grid grid-cols-12 gap-3 items-center bg-slate-50 border border-slate-200 p-2.5 rounded-xl transition-all hover:bg-slate-100/70";
                 div.innerHTML = `
                     <div class="col-span-4 text-xs font-bold text-slate-500">${golpes} Golpes</div>
                     <div class="col-span-8 relative">
@@ -562,15 +628,15 @@
             ipdVal.innerText = `${ipdFinal.toFixed(3)} mm/g`;
 
             if (ipdFinal <= limite && ipdFinal > 0) {
-                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20";
+                statusCard.className = "rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20";
                 statusLbl.innerText = "RESISTÊNCIA APROVADA";
                 statusDesc.innerText = `Abaixo do limite de ${limite.toFixed(1)} mm/golpe`;
             } else if (ipdFinal > 0) {
-                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-rose-600 text-white shadow-lg shadow-rose-600/20";
+                statusCard.className = "rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-rose-600 text-white shadow-lg shadow-rose-600/20";
                 statusLbl.innerText = "RECOMPACTAR TRECHO";
                 statusDesc.innerText = `Penetração excessiva (> ${limite.toFixed(1)} mm/golpe)`;
             } else {
-                statusCard.className = "rounded-xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-slate-300 text-slate-600 shadow-sm";
+                statusCard.className = "rounded-2xl p-5 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 bg-slate-300 text-slate-600 shadow-sm";
                 statusLbl.innerText = "AGUARDANDO LEITURAS";
                 statusDesc.innerText = "Insira as penetrações obtidas";
             }
@@ -601,10 +667,10 @@
                     datasets: [{
                         label: 'Penetração Acumulada (mm)',
                         data: dados,
-                        borderColor: '#154c81',
-                        backgroundColor: 'rgba(21, 76, 129, 0.08)',
+                        borderColor: '#0057ff',
+                        backgroundColor: 'rgba(0, 87, 255, 0.08)',
                         borderWidth: 3,
-                        pointBackgroundColor: '#154c81',
+                        pointBackgroundColor: '#0057ff',
                         pointHoverRadius: 6,
                         tension: 0.1,
                         fill: true
@@ -632,6 +698,26 @@
         }
 
         // ================= GERADORES DE PDF (jsPDF) =================
+
+        const CORSAN_LOGO_PNG = "data:image/png;base64,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";
+
+        function addPdfCorsanHeader(pdf, titulo, subtitulo) {
+            pdf.setFillColor(0, 87, 255); // Azul Corsan
+            pdf.rect(0, 0, 210, 34, 'F');
+
+            // Logo em fundo branco para manter boa leitura no PDF
+            pdf.setFillColor(255, 255, 255);
+            pdf.roundedRect(12, 6, 42, 22, 3, 3, 'F');
+            pdf.addImage(CORSAN_LOGO_PNG, 'PNG', 16, 9, 34, 17);
+
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFont('Helvetica', 'bold');
+            pdf.setFontSize(14);
+            pdf.text(titulo, 125, 13, { align: 'center' });
+            pdf.setFontSize(9);
+            pdf.setFont('Helvetica', 'italic');
+            pdf.text(subtitulo, 125, 20, { align: 'center' });
+        }
         function exportMetrosulPDF() {
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF('p', 'mm', 'a4');
@@ -662,17 +748,8 @@
             let dj = di / (1.0 + (ug / 100.0));
             let gc = proctor > 0 ? (dj / proctor) * 100.0 : 0.0;
 
-            // Cabeçalho Decorado (Título do Ensaio Puro)
-            pdf.setFillColor(21, 76, 129); // Azul Geotech
-            pdf.rect(0, 0, 210, 30, 'F');
-            
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFont('Helvetica', 'bold');
-            pdf.setFontSize(14);
-            pdf.text('DENSIDADE "IN SITU" - FRASCO DE AREIA', 105, 12, { align: 'center' });
-            pdf.setFontSize(9);
-            pdf.setFont('Helvetica', 'italic');
-            pdf.text('Relatório Técnico de Controle de Compactação de Campo', 105, 18, { align: 'center' });
+            // Cabeçalho com logo Corsan
+            addPdfCorsanHeader(pdf, 'DENSIDADE "IN SITU" - FRASCO DE AREIA', 'Relatório Técnico de Controle de Compactação de Campo');
             
             // Dados da OS
             pdf.setTextColor(30, 41, 59);
@@ -780,17 +857,8 @@
             let ipdFinal = totalGolpes > 0 ? (ultimaLeitura - mz) / totalGolpes : 0.0;
             let status = ipdFinal <= limite ? "APROVADO" : "REPROVADO";
 
-            // Cabeçalho Decorado (Título do Ensaio Puro)
-            pdf.setFillColor(21, 76, 129);
-            pdf.rect(0, 0, 210, 30, 'F');
-            
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFont('Helvetica', 'bold');
-            pdf.setFontSize(14);
-            pdf.text('RELATÓRIO TÉCNICO DE ENSAIO DCP', 105, 12, { align: 'center' });
-            pdf.setFontSize(9);
-            pdf.setFont('Helvetica', 'italic');
-            pdf.text('Ensaio de Penetração por Cone Dinâmico - Perfil de Resistência', 105, 18, { align: 'center' });
+            // Cabeçalho com logo Corsan
+            addPdfCorsanHeader(pdf, 'RELATÓRIO TÉCNICO DE ENSAIO DCP', 'Ensaio de Penetração por Cone Dinâmico - Perfil de Resistência');
 
             // Metadados
             pdf.setTextColor(30, 41, 59);
