@@ -696,13 +696,13 @@
             let y = 79;
             pdf.setFont('Helvetica', 'normal');
             let rowsU = [
-                ["Tara da Bandeja Pequena (ua)", `${ua.toFixed(3)} g`],
-                ["Massa do Solo Úmido + Bandeja (ub)", `${ub.toFixed(3)} g`],
-                ["Massa do Solo Seco + Bandeja (uc)", `${uc.toFixed(3)} g`],
-                ["Massa do Solo Úmido Líquida (ud = ub - ua)", `${ud.toFixed(3)} g`],
-                ["Massa do Solo Seco Líquida (ue = uc - ua)", `${ue.toFixed(3)} g`],
-                ["Massa da Água (uf = ud - ue)", `${uf.toFixed(3)} g`],
-                ["Teor de Umidade Obtido (w %)", `${ug.toFixed(2)} %`]
+                ["A) Tara da Bandeja Pequena", `${ua.toFixed(3)} g`],
+                ["B) Massa do Solo Úmido + Bandeja", `${ub.toFixed(3)} g`],
+                ["C) Massa do Solo Seco + Bandeja", `${uc.toFixed(3)} g`],
+                ["D) Massa do Solo Úmido Líquida (D = B - A)", `${ud.toFixed(3)} g`],
+                ["E) Massa do Solo Seco Líquida (E = C - A)", `${ue.toFixed(3)} g`],
+                ["F) Massa da Água (F = D - E)", `${uf.toFixed(3)} g`],
+                ["G) Teor de Umidade Obtido (w %)", `${ug.toFixed(2)} %`]
             ];
             
             rowsU.forEach(row => {
@@ -722,18 +722,19 @@
             y += 14;
             pdf.setFont('Helvetica', 'normal');
             let rowsD = [
-                ["Massa Inicial Frasco + Areia (da)", `${da.toFixed(3)} g`],
-                ["Massa Final Frasco + Areia (db)", `${db.toFixed(3)} g`],
-                ["Massa da Areia Consumida Total (dc)", `${dc.toFixed(3)} g`],
-                ["Massa da Areia no Cone (dd)", `${dd.toFixed(3)} g`],
-                ["Massa da Areia no Buraco (de = dc - dd)", `${de.toFixed(3)} g`],
-                ["Massa Úmida + Bandeja Cava (dh_total)", `${dhtotal.toFixed(3)} g`],
-                ["Tara da Bandeja Cava (dh_tara)", `${dhtara.toFixed(3)} g`],
-                ["Massa Líquida de Solo Úmido da Cava (dh_liquido)", `${dhliquido.toFixed(3)} g`],
-                ["Volume do Buraco/Cava (dg = de / df)", `${dg.toFixed(1)} cm³`],
-                ["Densidade Úmida de Campo (di)", `${di.toFixed(3)} g/cm³`],
-                ["Massa Específica Seca de Campo (dj)", `${dj.toFixed(3)} g/cm³`],
-                ["Massa Específica Seca Máxima Lab (Proctor)", `${proctor.toFixed(3)} g/cm³`]
+                ["H) Massa Inicial Frasco + Areia", `${da.toFixed(3)} g`],
+                ["I) Massa Final Frasco + Areia", `${db.toFixed(3)} g`],
+                ["J) Massa da Areia Consumida Total (J = H - I)", `${dc.toFixed(3)} g`],
+                ["K) Massa da Areia no Cone", `${dd.toFixed(3)} g`],
+                ["L) Massa da Areia no Buraco (L = J - K)", `${de.toFixed(3)} g`],
+                ["M) Massa Úmida + Bandeja Cava", `${dhtotal.toFixed(3)} g`],
+                ["N) Tara da Bandeja Cava", `${dhtara.toFixed(3)} g`],
+                ["O) Massa Líquida de Solo Úmido da Cava (O = M - N)", `${dhliquido.toFixed(3)} g`],
+                ["P) Densidade da Areia Utilizada", `${df.toFixed(3)} g/cm³`],
+                ["Q) Volume do Buraco/Cava (Q = L / P)", `${dg.toFixed(1)} cm³`],
+                ["R) Densidade Úmida de Campo (R = O / Q)", `${di.toFixed(3)} g/cm³`],
+                ["S) Massa Específica Seca de Campo (S = R / (1 + G/100))", `${dj.toFixed(3)} g/cm³`],
+                ["T) Massa Específica Seca Máxima Lab (Proctor)", `${proctor.toFixed(3)} g/cm³`]
             ];
 
             rowsD.forEach(row => {
